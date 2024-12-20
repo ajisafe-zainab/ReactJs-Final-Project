@@ -1,11 +1,10 @@
 import React, { useEffect,useState,useContext } from 'react';
-import { GlobalContext } from '../modules/globalContext';
-
+import { CartContext } from '../Context/CartContext';
 
 export function LandingPage() {
 const [products,setProducts] = useState({});
 const [error,setError] = useState(null);
-const{addTocart,setAddTocart,mutateSetAddToCart} = useContext(GlobalContext);
+const {addToCart,cart,removeFromCart} = useContext(CartContext);
 //Getting data from an Api
     useEffect(()=>{
         //Using IIFE (Immediately Invoked Function Expression)
@@ -43,24 +42,28 @@ const{addTocart,setAddTocart,mutateSetAddToCart} = useContext(GlobalContext);
     // const handleAddToCart = (item)=>{
     
     // }
+    console.log(cart);
 
   return (
     <>
     {/* Product Rendering */}
     <div>
      <h1>Categorized Products</h1>
+     <h2>Cart Items: {cart.length}</h2>
      {Object.keys(products).map((category)=>(
        <div key={category}>
         <h2>{category}</h2>
-
-        <div>
+   <div>
+        
         {products[category].map((product) => (
         <div key={product.id}>
           <img src={product.image} alt="" />
           <p>{product.title}</p>
-          <h3>{product.price}</h3>
-          <button>Add to Cart</button>
-        </div>
+          <h3>${product.price}</h3>
+         <button onClick={()=> addToCart(product)}>Add to Cart</button>
+          </div>
+          
+
         )
         )}
         </div>

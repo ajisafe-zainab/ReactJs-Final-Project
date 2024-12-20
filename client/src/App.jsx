@@ -1,10 +1,13 @@
 import React from 'react';
 import LandingPage from './Components/LandingPage';
-function App() {
+import CheckOutPage from './Components/CheckOutPage';
+export function App() {
   return (
-    <>
+    <div>
   <LandingPage/>
-    </>
+  <CheckOutPage/>
+
+    </div>
   )
 }
 
