@@ -1,6 +1,6 @@
 import React, { useEffect,useState,useContext } from 'react';
 import { CartContext } from '../Context/CartContext';
-
+import AppLayout from '../Layout';
 export function LandingPage() {
 const [products,setProducts] = useState({});
 const [error,setError] = useState(null);
@@ -38,39 +38,31 @@ const {addToCart,cart,removeFromCart} = useContext(CartContext);
     if(error){
       return <div>{error}</div>
     }
-    // //Handle Add to Cart
-    // const handleAddToCart = (item)=>{
-    
-    // }
-    console.log(cart);
 
   return (
     <>
     {/* Product Rendering */}
-    <div>
+    <AppLayout>
      <h1>Categorized Products</h1>
      <h2>Cart Items: {cart.length}</h2>
      {Object.keys(products).map((category)=>(
        <div key={category}>
         <h2>{category}</h2>
    <div>
-        
-        {products[category].map((product) => (
+         {products[category].map((product) => (
         <div key={product.id}>
           <img src={product.image} alt="" />
           <p>{product.title}</p>
           <h3>${product.price}</h3>
          <button onClick={()=> addToCart(product)}>Add to Cart</button>
           </div>
-          
-
         )
         )}
         </div>
 
        </div>
      ))}
-    </div>
+    </AppLayout>
     </>
   )
 }
