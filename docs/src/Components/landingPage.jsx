@@ -1,10 +1,14 @@
 import React, { useEffect,useState,useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
 import AppLayout from '../Layout';
+
 export function LandingPage() {
 const [products,setProducts] = useState({});
 const [error,setError] = useState(null);
-const {addToCart,cart,removeFromCart} = useContext(CartContext);
+const {addToCart,cart,setSelectedProduct} = useContext(CartContext);
+//To navigate
+const navigate = useNavigate();
 //Getting data from an Api
     useEffect(()=>{
         //Using IIFE (Immediately Invoked Function Expression)
@@ -38,7 +42,11 @@ const {addToCart,cart,removeFromCart} = useContext(CartContext);
     if(error){
       return <div>{error}</div>
     }
-
+  //FUNCTION TO HANDLE WHEN A PRODUCT IS CLICKED
+    const handleProductClick = (product)=>{
+      setSelectedProduct(product);
+      navigate("/productCard")
+    }
   return (
     <>
     {/* Product Rendering */}
@@ -46,13 +54,19 @@ const {addToCart,cart,removeFromCart} = useContext(CartContext);
      <h1>Categorized Products</h1>
      <h2>Cart Items: {cart.length}</h2>
      {Object.keys(products).map((category)=>(
-       <div key={category}>
-        <h2>{category}</h2>
-   <div>
-         {products[category].map((product) => (
-        <div key={product.id}>
-          <img src={product.image} alt="" />
-          <p>{product.title}</p>
+       <div key={category} >
+       <h2>{category}</h2>
+   <div
+   style={{display:"flex"}}
+    >
+         {products[category]?.map((product) => (
+           <div key={product.id} 
+           style={{
+         backgroundColor:"green",
+         width:"300px",
+        }}>
+          <img src={product.image} alt="" style={{width:"250px"}}  />
+          <p onClick={()=>handleProductClick(product)} style={{cursor:"pointer"}} >{product.title}</p>
           <h3>${product.price}</h3>
          <button onClick={()=> addToCart(product)}>Add to Cart</button>
           </div>

@@ -35,11 +35,12 @@ const {cart,addToCart,removeFromCart,setPaymentSuccess,paymentSuccess,setReceipt
     <AppLayout>
         <h1>Cart</h1>
         
-          { cart?.length === 0 ? (
+          { cart?.length === 0 ? 
         <p>Your cart is empty!</p>
-      ) :(cart?.map((item,index) => (
+       :(cart?.map((item,index) => (
             <div key={item?.id || index}>
-          <p>{item?.title || "Untitled Item"}</p>
+          <img src={item?.image} alt="" />
+          <p> <strong> {item?.title || "Untitled Item"} </strong></p>
           <button onClick={() => addToCart(item)}>+</button>
           <button>{item?.quantity}</button>
           <button onClick={() => removeFromCart(item)}>x</button>

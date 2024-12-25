@@ -1,14 +1,13 @@
-import React,{createContext,useState} from 'react';
-
-
+import React,{createContext,useState,useEffect} from 'react';
 export const CartContext = createContext();
 
 export function CartContextProvider({children}) {
-const [cart,setCart] = useState([]);
+const [cart,setCart] = useState(JSON.parse(localStorage.getItem('list'))||[]);
 const [receipt,setReceipt] = useState(null);
 const [paymentSuccess,setPaymentSuccess]= useState(false);
+const [selectedProduct,setSelectedProduct] = useState(null);
 
-//Function to add product to Cart
+//FUNCTION TO ADD TO CART
  const addToCart = (item)=>{
    setCart((prevoiusCartItems)=>{
 //Check if product already exists in the Cart
@@ -17,8 +16,8 @@ const [paymentSuccess,setPaymentSuccess]= useState(false);
 //Update the quantity of the existing items
       return prevoiusCartItems?.map((cartItem)=>
          cartItem?.id === item?.id ? { ...cartItem, quantity:cartItem.quantity + 1} : cartItem
-        
-      )
+      // alert(`${cartItem.title} added to cart`)
+    )
       }
       else {
 // Add the new item with a quantity of 1
@@ -27,7 +26,14 @@ const [paymentSuccess,setPaymentSuccess]= useState(false);
    
   })
     }
-    //Function to delete from Cart
+
+ //Using LocalStorage
+  useEffect(()=>{
+    localStorage.setItem('list',JSON.stringify(cart));
+    // setStorage(JSON.parse(localStorage.getItem('list')))
+  },[cart.length]);
+
+//FUNCTION TO DELETE FROM CART
     const removeFromCart = (item)=>{
       setCart((prevoiusCartItems)=> prevoiusCartItems?.filter((cartItem)=> cartItem?.id !== item?.id)
 
@@ -36,7 +42,7 @@ const [paymentSuccess,setPaymentSuccess]= useState(false);
  
   return (
     <>
-    <CartContext.Provider value={{addToCart,cart,setCart,removeFromCart,receipt,paymentSuccess,setPaymentSuccess,setReceipt}}>
+    <CartContext.Provider value={{addToCart,cart,setCart,removeFromCart,receipt,paymentSuccess,setPaymentSuccess,setReceipt,setSelectedProduct,selectedProduct}}>
       {children}
     </CartContext.Provider>
     </>
