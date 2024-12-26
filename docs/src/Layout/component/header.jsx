@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
- export function Header() {
+export function Header() {
   const [searchByTitle,setSearchByTitle] = useState(null);
   const[mode,setMode] = useState("light");
 //FUNCTION TO PERFORM MODE OPERATION
@@ -41,11 +41,12 @@ import { Link } from 'react-router-dom';
           justifyContent:"space-between",
           alignItems:"center",
           position:"sticky"
+          
         }}       
         >
-        <div>
+        <div> 
           <Link to="/" >    
-          <span>Home</span>
+          <span style={{ textDecoration:"none"}} >Home</span>
           </Link>
 
           <Link to="/checkOutPage">          

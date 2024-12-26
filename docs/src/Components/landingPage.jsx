@@ -2,7 +2,6 @@ import React, { useEffect,useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
 import AppLayout from '../Layout';
-
 export function LandingPage() {
 const [products,setProducts] = useState({});
 const [error,setError] = useState(null);
@@ -42,6 +41,7 @@ const navigate = useNavigate();
     if(error){
       return <div>{error}</div>
     }
+    
   //FUNCTION TO HANDLE WHEN A PRODUCT IS CLICKED
     const handleProductClick = (product)=>{
       setSelectedProduct(product);
@@ -56,19 +56,23 @@ const navigate = useNavigate();
      {Object.keys(products).map((category)=>(
        <div key={category} >
        <h2>{category}</h2>
-   <div
-   style={{display:"flex"}}
-    >
+   <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",gap:"15px"}}>
          {products[category]?.map((product) => (
            <div key={product.id} 
            style={{
-         backgroundColor:"green",
-         width:"300px",
+         display:"flex",
+         flexDirection:"column",
+         alignItems: "center",
+         backgroundColor: "#Ff6090",
+         padding:"10px",
+         borderRadius:"4px",
+         boxShadow:" 0 2px 4px rgba(0, 0, 0, 0.1)"
+        
         }}>
           <img src={product.image} alt="" style={{width:"250px"}}  />
           <p onClick={()=>handleProductClick(product)} style={{cursor:"pointer"}} >{product.title}</p>
           <h3>${product.price}</h3>
-         <button onClick={()=> addToCart(product)}>Add to Cart</button>
+         <button onClick={()=> addToCart(product)} style={{width:"150px",padding:"3px",borderRadius:"5px",border:"none",backgroundColor:"#4A8BDF"}} >Add to Cart</button>
           </div>
         )
         )}
